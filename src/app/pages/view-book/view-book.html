@@ -1,0 +1,197 @@
+
+<div class="container-fluid">
+    <div class="row mt-3">
+        <div class="col text-center">
+            <button mat-mini-fab style="background-color: brown;" (click)="goBack()">
+                <mat-icon style="color: #fff" matTooltip="Back">keyboard_backspace</mat-icon>
+            </button>
+            <span style="font-size: 18px; margin-left: 20px;"> Book: <span class="book-name">{{bookName}}</span>
+            </span>
+        </div>
+    
+    <div class="col text-center">
+        <mat-form-field appearance="outline">
+            <mat-label>Serch: </mat-label>
+            <input matInput [(ngModel)]="searchkey" (keyup)="applyFilter($event.target.value)">
+            <button mat-icon-button matSuffix *ngIf="searchkey" (click)="onSearchClear()"><mat-icon >close</mat-icon></button>
+        </mat-form-field>
+    </div>
+    <div class="col text-center">
+        <button mat-flat-button style="background-color: green; color:white" (click)="toggleDrawerForCashIn()"> + Cash In</button>
+        <button mat-flat-button style="background-color: brown; color:white" (click)="toggleDrawerForCashOut()"> - Cash Out</button>
+    </div>
+    </div>
+    <mat-divider></mat-divider>
+</div>
+<div class="containter mt-3">
+    <div class="row text-center">
+        <div class="col">
+            <mat-icon style="background-color: green; color: #fff ; border-radius: 100px;">add</mat-icon>Cash In
+            <span style="font-size: 24px; color: green">&#8377; 
+
+                {{cashInMoney != null || undefined ? cashInMoney : 0}} /-
+            </span>
+        </div>
+
+        <div class="col">
+            <mat-icon style="background-color: brown; color: #fff ; border-radius: 100px;">remove</mat-icon>Cash Out
+            <span style="font-size: 24px; color: brown">&#8377; 
+                {{cashOutMoney != null || undefined? cashOutMoney : 0  }} /-
+            </span>
+        </div>
+
+        <div class="col">
+            <mat-icon style="background-color: blue; color: #fff ; border-radius: 100px;">check</mat-icon>Balance Amount
+            @if(cashInMoney-cashOutMoney){
+                <span style="font-size: 24px; color: blue">&#8377; 
+                    {{cashInMoney - cashOutMoney}} /-
+                </span>
+            }
+            @else {
+                <span style="font-size: 24px; color: blue">&#8377; 
+                   0/-
+                </span>
+            }
+        </div>
+        
+    </div>
+</div>
+<mat-divider></mat-divider>
+
+<div class="drawer-container" [ngClass]="{'open': isDrawerOpen}">
+    <div class="drawer-content">
+        <mat-toolbar>
+            {{title}}
+            <span class="spacer"></span>
+            <button mat-icon-button (click)="toggleDrawer()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-toolbar>
+        <mat-divider></mat-divider>
+        <!-- Drawer Content starts from  here... -->
+         <div class="container mt-3">
+            <from [formGroup]="addForm">
+                <div class="row col-12">
+                    <div class="col-6">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Date:</mat-label>
+                            <input matInput formControlName="date" [matDatepicker]="picker"> 
+                            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                            <mat-error>
+                                @if(addForm.controls.date.touched && addForm.controls.date.invalid){
+                                    @if(addForm.controls.date.errors?.required){
+                                        <span>Transaction Date is Required</span>
+                                    }
+                                }
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-6">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Time: </mat-label>
+                            <input matInput [ngxTimepicker]="timePicker" formControlName="time">
+                            <ngx-material-timepicker #timePicker></ngx-material-timepicker>
+                            <mat-icon matSuffix>schedule</mat-icon>
+                            <mat-error>
+                                @if(addForm.controls.time.touched && addForm.controls.time.invalid){
+                                    @if(addForm.controls.time.errors?.required){
+                                        <span>Transaction Time is Required</span>
+                                    }
+                                }
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row col-12">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Amount:</mat-label>
+                        <input matInput formControlName="amount">
+                        <mat-icon matPrefix>currency_rupee</mat-icon>
+                        <mat-error>
+                            @if(addForm.controls.amount.touched && addForm.controls.amount.invalid){
+                                @if(addForm.controls.amount.errors?.required){
+                                    <span>Transaction Amount is Required</span>
+                                }
+                            }
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="row col-12">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Description:</mat-label>
+                        <input matInput formControlName="description">
+                       <mat-error>
+                            @if(addForm.controls.description.touched && addForm.controls.description.invalid){
+                                @if(addForm.controls.description.errors?.required){
+                                    <span>Description is Required</span>
+                                }
+                            }
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                @if(entrycode == 1){
+                    <button mat-flat-button [disabled]="!(addForm.dirty && addForm.valid)" (click)="save()">Save </button>
+                }
+                @else {
+                    <button mat-flat-button [disabled]="!(addForm.dirty && addForm.valid)" (click)="save()">Save </button> 
+                }
+                
+            </from>
+         </div>
+    </div>
+</div>
+
+
+<div class="container mt-3">
+    @if (hasEntries) {
+        <table mat-table [dataSource]="entries" class="mat-elevation-z8">
+            <ng-container matColumnDef="date">
+                <th mat-header-cell *matHeaderCellDef>Date</th>
+                <td mat-cell *matCellDef="let element" [ngClass]="{'cash-in': element.type === 'cash-in','cash-out': element.type === 'cash-out'}">
+                    {{ element.date | date: 'dd /MM/ yyyy' }}
+                </td>
+
+            </ng-container>
+
+             <ng-container matColumnDef="time">
+                <th mat-header-cell *matHeaderCellDef>Time</th>
+                <td mat-cell *matCellDef="let element" [ngClass]="{'cash-in': element.type === 'cash-in','cash-out': element.type === 'cash-out'}">
+                    {{element.time }}
+                </td>
+
+            </ng-container>
+
+             <ng-container matColumnDef="description">
+                <th mat-header-cell *matHeaderCellDef>Description</th>
+                <td mat-cell *matCellDef="let element" [ngClass]="{'cash-in': element.type === 'cash-in','cash-out': element.type === 'cash-out'}">
+                    {{element.description}}
+                </td>
+
+            </ng-container>
+
+             <ng-container matColumnDef="amount">
+                <th mat-header-cell *matHeaderCellDef>Amount</th>
+                <td mat-cell *matCellDef="let element" [ngClass]="{'cash-in': element.type === 'cash-in','cash-out': element.type === 'cash-out'}">
+                    {{element.amount}}
+                </td>
+
+            </ng-container>
+
+             <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef>Actions</th>
+                <td mat-cell *matCellDef="let element">
+                    <mat-icon matTooltip="Edit" style="color: green;" (click)="onEdit(element)">edit</mat-icon>
+                    <mat-icon matTooltip="Delete" style="color: brown;" (click)="onDelete(element)">delete</mat-icon>
+                </td>
+             
+            </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColums"></tr> 
+          <tr mat-row *matRowDef="let row; columns: displayedColums"></tr> 
+        </table>
+
+        <mat-paginator  [pageSizeOptions]="[5, 10, 15, 20, 25, 50, 100]" [pageSize]="5" showFirstLastButtons style="margin-top: 20px;"></mat-paginator>
+    }
+
+</div>

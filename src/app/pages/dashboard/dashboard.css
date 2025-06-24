@@ -1,0 +1,9 @@
+.dashboard-container{
+    height: 90vh;
+    margin-top: 5px;
+
+}
+.sidnavStyle{
+    width: 300px;
+    box-shadow: 1px 1px 5px black;
+}

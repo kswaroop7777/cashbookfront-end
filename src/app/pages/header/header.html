@@ -1,0 +1,27 @@
+<mat-toolbar style="box-shadow: 1px 1px 5px black; height: 80px;">
+  <img src="/images/logo.png" style="width: 80px; height: 80px;">
+  <span style="color: black;">
+    <span style="font-size: 26px;">C</span>ashbook
+  </span>
+  <span class="spacer"></span>
+  <span>
+    <button mat-button style="color: black;" [routerLink]="'/home'" routerLinkActive="active">Home</button>
+    <button mat-button style="color: black;">About Us</button>
+    <button mat-button style="color: black;">Services</button>
+    <button mat-button style="color: black;">Contact</button>
+  </span>
+  <span class="spacer"></span>
+
+  @if(username()){
+        <span style="color: chocolate; cursor: pointer;" [matMenuTriggerFor]="logMenu"><mat-icon>logout{{username()}}</mat-icon> </span>
+    }
+    @else{
+        <button mat-stroked-button style="color: black" [routerLink]="'/login'">Login</button>
+        <button mat-stroked-button style="color: black" [routerLink]="'/register'">Register</button>
+    
+    }  
+
+</mat-toolbar>
+<mat-menu #logMenu="matMenu">
+  <a mat-menu-item  (click)="logOut()">Logout</a>
+</mat-menu>

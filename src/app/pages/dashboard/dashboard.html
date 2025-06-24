@@ -1,0 +1,56 @@
+<mat-drawer-container class="dashboard-container" autosize>
+    <mat-drawer #drawer class="sidnavStyle" mode="side" opened>
+        <div class="text-center p-3">
+            <button mat-flat-button style="background-color: black;color: #fff; margin-bottom: 15px;"  (click)="addBook()">+Add New Book</button>
+            <mat-divider ></mat-divider>
+        </div>
+    </mat-drawer>
+    <mat-drawer-container>
+        <div style="margin: 10px;">
+            <button mat-mini-fab style="background-color: black; color: #fff;" (click)="drawer.toggle()">
+                <mat-icon>menu</mat-icon>
+            </button>
+           
+            <h2>My Books</h2>
+            @if(books){
+                <div class="card">
+                    <div class="card-body">
+                        <table class="table table-responsive">
+                            <thead>
+                                <tr>
+                                    <th>Book Name</th>
+                                    <th>Actions...</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            @for (book of books; track book) {
+                                <tr>
+                                    <td>{{book.bookTitle}}</td>
+                                    <td>
+                                        <button mat-icon-button style="color: black;" (click)="viewBook(book)">
+                                            <mat-icon matTooltip="View">visibility</mat-icon>
+                                        </button>
+
+                                        <button mat-icon-button style="color: black;">
+                                            <mat-icon matTooltip="Edit">edit</mat-icon>
+                                        </button>
+                                        
+                                        <button mat-icon-button style="color: black;">
+                                            <mat-icon matTooltip="Delete">delete</mat-icon>
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            }
+            @else {
+                <h4>No Books Were Found!</h4>
+            }
+
+        </div>
+    </mat-drawer-container>
+</mat-drawer-container>

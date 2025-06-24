@@ -1,0 +1,31 @@
+<div class="container-fluid">
+    <mat-toolbar class="d-flex justify-content-between" style="height: 50px; color: black;">
+        Add New Book
+        <button mat-icon-button matDialogClose>
+            <mat-icon style="color: black;">close</mat-icon>
+        </button>
+    </mat-toolbar>
+
+    <div class="container mt-3">
+        <form [formGroup]="bookForm">
+            <mat-form-field appearance="outline" style="width: 100%;">
+                <mat-label>Book Name:</mat-label>
+                <input matInput formControlName="name">
+                <mat-error>
+                    @if (bookForm.controls.name.touched && bookForm.controls.name.invalid) {
+                        @if (bookForm.controls.name.errors?.required){
+                            <span>Book name Mandatory</span>
+                        }
+                    }
+                </mat-error>
+            </mat-form-field>
+
+        </form>
+        <div class="text-center mt-3 mb-3">
+            <button mat-flat-button [disabled]="!bookForm.valid" (click)="addNewBook()">Add</button>
+
+             
+        </div>
+
+    </div>
+</div>
