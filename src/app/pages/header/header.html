@@ -1,27 +1,55 @@
-<mat-toolbar style="box-shadow: 1px 1px 5px black; height: 80px;">
-  <img src="/images/logo.png" style="width: 80px; height: 80px;">
-  <span style="color: black;">
-    <span style="font-size: 26px;">C</span>ashbook
+<mat-toolbar class="toolbar" color="primary">
+  <!-- Logo and App Name -->
+  <img src="/images/logo.png" class="logo" alt="Logo" />
+  <span class="app-name">
+    <span class="highlight">C</span>ashbook<span class="highlight">W</span>allet
   </span>
-  <span class="spacer"></span>
-  <span>
-    <button mat-button style="color: black;" [routerLink]="'/home'" routerLinkActive="active">Home</button>
-    <button mat-button style="color: black;">About Us</button>
-    <button mat-button style="color: black;">Services</button>
-    <button mat-button style="color: black;">Contact</button>
-  </span>
+
   <span class="spacer"></span>
 
-  @if(username()){
-        <span style="color: chocolate; cursor: pointer;" [matMenuTriggerFor]="logMenu"><mat-icon>logout{{username()}}</mat-icon> </span>
-    }
-    @else{
-        <button mat-stroked-button style="color: black" [routerLink]="'/login'">Login</button>
-        <button mat-stroked-button style="color: black" [routerLink]="'/register'">Register</button>
-    
-    }  
+  <!-- Desktop Navigation Buttons -->
+  <span class="nav-buttons desktop-only">
+    <button mat-button [routerLink]="'/home'" routerLinkActive="active">Home</button>
+    <button mat-button>About Us</button>
+    <button mat-button>Services</button>
+    <button mat-button>Contact</button>
+  </span>
 
+  <span class="spacer desktop-only"></span>
+
+  <!-- Desktop Auth Buttons -->
+  @if(username()) {
+    <span class="user-icon desktop-only" [matMenuTriggerFor]="logMenu">
+      <mat-icon>logout</mat-icon>{{username()}}
+    </span>
+  } @else {
+    <div class="desktop-only">
+      <button mat-stroked-button [routerLink]="'/login'">Login</button>
+      <button mat-stroked-button [routerLink]="'/register'">Register</button>
+    </div>
+  }
+
+  <!-- Mobile Menu Toggle (moved to right side) -->
+  <button mat-icon-button class="mobile-toggle" (click)="isMenuOpen = !isMenuOpen">
+    <mat-icon>menu</mat-icon>
+  </button>
 </mat-toolbar>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" *ngIf="isMenuOpen">
+  <button mat-button [routerLink]="'/home'" routerLinkActive="active">Home</button>
+  <button mat-button>About Us</button>
+  <button mat-button>Services</button>
+  <button mat-button>Contact</button>
+
+  @if(username()) {
+    <button mat-button (click)="logOut()">Logout ({{ username() }})</button>
+  } @else {
+    <button mat-stroked-button [routerLink]="'/login'">Login</button>
+    <button mat-stroked-button [routerLink]="'/register'">Register</button>
+  }
+</div>
+
 <mat-menu #logMenu="matMenu">
-  <a mat-menu-item  (click)="logOut()">Logout</a>
+  <button mat-menu-item (click)="logOut()">Logout</button>
 </mat-menu>

@@ -1,7 +1,83 @@
-.spacer{
-    flex: 1 1 auto
+.toolbar {
+  box-shadow: 1px 1px 5px black;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: white;
+  color: black;
 }
-.active{
-    background-color:chocolate ;
-    color: white;
+
+.logo {
+  width: 50px;
+  height: 50px;
+  margin-right: 8px;
+}
+
+.app-name {
+  font-weight: 500;
+  font-size: 22px;
+  color: black;
+}
+
+.app-name .highlight {
+  font-size: 26px;
+  font-weight: 600;
+  color: rgba(33, 72, 219, 0.8);
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.nav-buttons button {
+  color: black;
+}
+
+.user-icon {
+  color: chocolate;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+/* Mobile styles */
+.mobile-toggle {
+  display: none;
+}
+
+/* Hide elements on mobile */
+.desktop-only {
+  display: flex;
+}
+
+.mobile-menu {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .mobile-toggle {
+    display: inline-flex;
+    margin-right: 8px;
+  }
+
+  .desktop-only {
+    display: none !important;
+  }
+
+  .mobile-menu {
+    display: flex;
+    flex-direction: column;
+    background: white;
+    padding: 10px 16px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  }
+
+  .mobile-menu button {
+    text-align: left;
+    margin: 6px 0;
+    color: black;
+  }
 }

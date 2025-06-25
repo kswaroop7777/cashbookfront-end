@@ -1,0 +1,13 @@
+@media (max-width: 768px) {
+  .card {
+    margin: 0 10px;
+  }
+
+  .card-header {
+    text-align: center;
+  }
+
+  button[mat-flat-button] {
+    width: auto;
+  }
+}

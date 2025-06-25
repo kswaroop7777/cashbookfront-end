@@ -22,7 +22,10 @@ import { MatIconModule } from '@angular/material/icon';
   styleUrl: './header.css',
   preserveWhitespaces: true
 })
+
+
 export class Header implements OnInit, AfterViewChecked{
+  isMenuOpen = false;
 
   private _user = inject(User)
   private _router = inject(Router)

@@ -1,31 +1,33 @@
-<div class="container-fluid">
-    <mat-toolbar class="d-flex justify-content-between" style="height: 50px; color: black;">
-        Add New Book
-        <button mat-icon-button matDialogClose>
-            <mat-icon style="color: black;">close</mat-icon>
-        </button>
-    </mat-toolbar>
+<div class="container-fluid p-0">
+  <!-- Header Toolbar -->
+  <mat-toolbar class="d-flex justify-content-between px-3" style="height: 50px; color: rgb(63, 101, 238);">
+    Add New Book
+    <button mat-icon-button matDialogClose>
+      <mat-icon style="color: rgb(63, 101, 238);">close</mat-icon>
+    </button>
+  </mat-toolbar>
 
-    <div class="container mt-3">
-        <form [formGroup]="bookForm">
-            <mat-form-field appearance="outline" style="width: 100%;">
-                <mat-label>Book Name:</mat-label>
-                <input matInput formControlName="name">
-                <mat-error>
-                    @if (bookForm.controls.name.touched && bookForm.controls.name.invalid) {
-                        @if (bookForm.controls.name.errors?.required){
-                            <span>Book name Mandatory</span>
-                        }
-                    }
-                </mat-error>
-            </mat-form-field>
+  <!-- Form Section -->
+  <div class="container mt-3">
+    <form [formGroup]="bookForm">
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Book Name:</mat-label>
+        <input matInput formControlName="name" />
+        <mat-error>
+          @if (bookForm.controls.name.touched && bookForm.controls.name.invalid) {
+            @if (bookForm.controls.name.errors?.required) {
+              <span>Book name is mandatory</span>
+            }
+          }
+        </mat-error>
+      </mat-form-field>
+    </form>
 
-        </form>
-        <div class="text-center mt-3 mb-3">
-            <button mat-flat-button [disabled]="!bookForm.valid" (click)="addNewBook()">Add</button>
-
-             
-        </div>
-
+    <!-- Add Button -->
+    <div class="text-center mt-3 mb-3">
+      <button mat-flat-button color="primary" [disabled]="!bookForm.valid" (click)="addNewBook()">
+        Add
+      </button>
     </div>
+  </div>
 </div>

@@ -1,0 +1,11 @@
+.home-banner {
+  width: 100%;           /* Full viewport width */
+  height: 100%;          /* Full viewport height */
+  object-fit: cover;      /* Cover the area without stretching */
+  display: block;
+  margin: 0;
+  overflow: hidden;
+  position: relative;
+  padding:0;
+
+}

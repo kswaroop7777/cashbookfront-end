@@ -60,3 +60,30 @@ th{
     color: brown !important;
     font-size: large;
 }
+
+
+@media (max-width: 768px) {
+  .row > .col {
+    margin-bottom: 10px;
+  }
+
+  .drawer-container {
+    width: 100% !important;
+    padding: 10px;
+  }
+
+  mat-form-field {
+    width: 100% !important;
+  }
+
+  button[mat-flat-button],
+  button[mat-icon-button] {
+    width: auto;
+    margin-bottom: 10px;
+  }
+
+  .mat-table {
+    overflow-x: auto;
+    display: block;
+  }
+}
