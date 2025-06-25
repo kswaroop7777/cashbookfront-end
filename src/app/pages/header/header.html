@@ -20,7 +20,7 @@
   <!-- Desktop Auth Buttons -->
   @if(username()) {
     <span class="user-icon desktop-only" [matMenuTriggerFor]="logMenu">
-      <mat-icon>logout</mat-icon>{{username()}}
+      <mat-icon>logout{{username()}}</mat-icon>
     </span>
   } @else {
     <div class="desktop-only">
@@ -43,7 +43,7 @@
   <button mat-button>Contact</button>
 
   @if(username()) {
-    <button mat-button (click)="logOut()">Logout ({{ username() }})</button>
+    <button mat-button (click)="logOut()"><mat-icon>logout{{username()}}</mat-icon></button>
   } @else {
     <button mat-stroked-button [routerLink]="'/login'">Login</button>
     <button mat-stroked-button [routerLink]="'/register'">Register</button>
