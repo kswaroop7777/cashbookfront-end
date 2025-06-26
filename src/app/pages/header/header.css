@@ -33,9 +33,48 @@
   flex: 1 1 auto;
 }
 
-.nav-buttons button {
-  color: black;
+.nav-buttons a {
+  font-family: 'Inter', 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: #1b1f3b; /* dark navy tone similar to reference */
+  text-decoration: none;
+  text-transform: none;
+  margin: 0 14px;
+  padding: 8px 0;
+  position: relative;
+  transition: color 0.3s ease;
 }
+
+.nav-buttons a:hover,
+.nav-buttons a.active-link {
+  color: #3c4fe0; /* Blue hover/active color */
+}
+
+.nav-buttons a::after,
+.nav-buttons a.active-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  width: 100%;
+  background-color: #3c4fe0;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+  transform: scaleX(1);
+}
+
+.nav-buttons a:not(.active-link)::after {
+  content: '';
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.nav-buttons a:hover::after {
+  transform: scaleX(1);
+}
+
 
 .user-icon {
   color: chocolate;
